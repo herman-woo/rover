@@ -107,21 +107,25 @@ window.addEventListener('load', () => {
     //3B ROVER INFO COMPONENT
     //This is component is called once a selection is made via the rover buttons
     //the Rover varaible is returned from callback function
-    function roverBody(rover,selected){
-        //i just need to see the data to know what to call
-//        console.log('Rover data:',selected,rover)
-        let photos = rover.image.photos
-        return `
-        <main id="main">
-            <div id="rover-data">
-                ${missionManifest(photos,selected)}
-            </div>
-            <div id="rover-gallery">
-                ${gallerySorter(photos)}
-            </div>
-        </main>
-    `
-    }
+    function roverBody(selected){
+            //i just need to see the data to know what to call
+    //        console.log('Rover data:',selected,rover)
+        const roverElements = (rover) => {
+            let photos = rover.image.photos 
+            let data = missionManifest(selected)
+                return `
+                <main id="main">
+                    <div id="rover-data">
+                        ${data(photos)}
+                    </div>
+                    <div id="rover-gallery">
+                        ${gallerySorter(photos)}
+                    </div>
+                </main>
+                `
+            }
+            return roverElements
+        }
 
 //Footer component
 function footer(){
@@ -144,11 +148,12 @@ function footer(){
 
 //container(string) - the main point of this function is to determine which info is displayed in container
     const container = (rovername) => {
+        let roverTrue = roverBody(rovername)
         if (rovername === undefined){
             return apodBody(store.apod)
         }
         else{
-            return roverBody(selection(rovername),rovername)}
+            return roverTrue(selection(rovername))}
     }
 
 //selection(string) - rover selection callback function, returns the desired state for the components to display
@@ -192,22 +197,20 @@ const ImageOfTheDay = (apod) => {
 }
 
 
-const missionManifest = (photos,name) => {
+const missionManifest = (name) => {
     let roverInfo = `<h1> Selected Rover: ${name} </h1>`
-    if (photos.length === 0){
-        roverInfo += `<h2> There is no Rover data to show </h2>`
-    }
-    else{
-        let manifestData = photos[0].rover
+    const manifestData = (photos) => {
+        let origin = photos[0].rover
         roverInfo += `
             <div>
-                <h2> Launch Date: ${manifestData.launch_date} </h2>
-                <h2> Landing Date: ${manifestData.landing_date} </h2>
-                <h2> Status: ${manifestData.status}
+                <h2> Launch Date: ${origin.launch_date} </h2>
+                <h2> Landing Date: ${origin.landing_date} </h2>
+                <h2> Status: ${origin.status}
             </div>
         `
+        return roverInfo
     }
-    return roverInfo
+    return manifestData
 }
 
 
