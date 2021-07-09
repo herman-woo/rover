@@ -247,7 +247,7 @@ const gallerySorter = (photos) => {
 const getImageOfTheDay = (state) => {
     console.log('called apod')
     let { apod } = state
-    fetch(`http://localhost:3000/apod`)
+    fetch(`/apod`)
         .then(res => res.json())
         .then(apod => updateStore(store, { apod }))
     return data
@@ -256,7 +256,7 @@ const getImageOfTheDay = (state) => {
 const getCuriosityGallery = (state) => {
     console.log('called curiosity')
     let { curiosity } = state
-    fetch(`http://localhost:3000/curiosity`)
+    fetch(`/curiosity`)
         .then(res => res.json())
         .then(curiosity => updateStore(store, { curiosity }))
 
@@ -266,7 +266,7 @@ const getCuriosityGallery = (state) => {
 const getOpportunityGallery = (state) => {
     console.log('called opportunity')
     let { opportunity } = state
-    fetch(`http://localhost:3000/opportunity`)
+    fetch(`/opportunity`)
         .then(res => res.json())
         .then(opportunity => updateStore(store, { opportunity }))
 
@@ -276,7 +276,7 @@ const getOpportunityGallery = (state) => {
 const getSpiritGallery = (state) => {
     console.log('called spirit')
     let { spirit } = state
-    fetch(`http://localhost:3000/spirit`)
+    fetch(`/spirit`)
         .then(res => res.json())
         .then(spirit => updateStore(store, { spirit }))
 
